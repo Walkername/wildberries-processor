@@ -1,4 +1,4 @@
-package ru.wildberries.analytics.models;
+package ru.wildberries.analytics.processor.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;

@@ -1,4 +1,4 @@
-package ru.wildberries.analytics.services;
+package ru.wildberries.analytics.processor.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,13 +6,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.wildberries.analytics.dto.PriceStateDTO;
-import ru.wildberries.analytics.dto.ProductDTO;
-import ru.wildberries.analytics.dto.ProductSizeDTO;
-import ru.wildberries.analytics.models.PriceState;
-import ru.wildberries.analytics.models.Product;
-import ru.wildberries.analytics.models.ProductSize;
-import ru.wildberries.analytics.repositories.ProductsRepository;
+import ru.wildberries.analytics.processor.dto.PriceStateDTO;
+import ru.wildberries.analytics.processor.dto.ProductDTO;
+import ru.wildberries.analytics.processor.dto.ProductSizeDTO;
+import ru.wildberries.analytics.processor.models.PriceState;
+import ru.wildberries.analytics.processor.models.Product;
+import ru.wildberries.analytics.processor.models.ProductSize;
+import ru.wildberries.analytics.processor.repositories.ProductsRepository;
 
 import java.util.ArrayList;
 import java.util.List;

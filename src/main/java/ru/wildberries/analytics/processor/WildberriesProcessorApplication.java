@@ -1,13 +1,13 @@
-package ru.wildberries.analytics;
+package ru.wildberries.analytics.processor;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ProcessorApiApplication {
+public class WildberriesProcessorApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ProcessorApiApplication.class, args);
+        SpringApplication.run(WildberriesProcessorApplication.class, args);
     }
 
 }

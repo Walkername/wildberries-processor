@@ -1,4 +1,4 @@
-package ru.wildberries.analytics.models;
+package ru.wildberries.analytics.processor.models;
 
 public class PriceState {
 

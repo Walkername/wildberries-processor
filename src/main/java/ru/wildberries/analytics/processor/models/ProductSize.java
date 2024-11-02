@@ -1,21 +1,15 @@
-package ru.wildberries.analytics.dto;
+package ru.wildberries.analytics.processor.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+public class ProductSize {
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class ProductSizeDTO {
-
-    @JsonProperty("name")
     private String name;
 
-    @JsonProperty("origName")
     private String origName;
 
-    @JsonProperty("price")
-    private ProductPriceDTO price;
+    private int basicPrice;
 
-    @JsonProperty("rank")
+    private int discountPrice;
+
     private int rank;
 
     public String getName() {
@@ -34,12 +28,20 @@ public class ProductSizeDTO {
         this.origName = origName;
     }
 
-    public ProductPriceDTO getPrice() {
-        return price;
+    public int getBasicPrice() {
+        return basicPrice;
     }
 
-    public void setPrice(ProductPriceDTO price) {
-        this.price = price;
+    public void setBasicPrice(int basicPrice) {
+        this.basicPrice = basicPrice;
+    }
+
+    public int getDiscountPrice() {
+        return discountPrice;
+    }
+
+    public void setDiscountPrice(int discountPrice) {
+        this.discountPrice = discountPrice;
     }
 
     public int getRank() {
@@ -52,10 +54,11 @@ public class ProductSizeDTO {
 
     @Override
     public String toString() {
-        return "ProductSizeDTO{" +
+        return "ProductSize{" +
                 "name='" + name + '\'' +
                 ", origName='" + origName + '\'' +
-                ", price=" + price +
+                ", basicPrice=" + basicPrice +
+                ", discountPrice=" + discountPrice +
                 ", rank=" + rank +
                 '}';
     }

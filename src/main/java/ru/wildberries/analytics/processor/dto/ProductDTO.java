@@ -1,4 +1,4 @@
-package ru.wildberries.analytics.dto;
+package ru.wildberries.analytics.processor.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

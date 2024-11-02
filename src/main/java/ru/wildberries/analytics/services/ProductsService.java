@@ -1,7 +1,6 @@
 package ru.wildberries.analytics.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,16 +31,14 @@ public class ProductsService {
     @Transactional
     public void process(String productJson) {
         ObjectMapper mapper = new ObjectMapper();
-        ProductDTO productDTO = null;
+        ProductDTO productDTO;
         try {
             productDTO = mapper.readValue(productJson, ProductDTO.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        //System.out.println(productDTO);
+
         Product product = convertToProduct(productDTO);
-        //System.out.println(product);
-        //System.out.println();
         productsRepository.save(product);
     }
 

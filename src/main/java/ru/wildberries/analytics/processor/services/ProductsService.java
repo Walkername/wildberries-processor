@@ -34,60 +34,78 @@ public class ProductsService {
         ProductDTO productDTO;
         try {
             productDTO = mapper.readValue(productJson, ProductDTO.class);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            Product product = convertToProduct(productDTO);
+            productsRepository.save(product);
+        } catch (Exception ignored) {
         }
-
-        Product product = convertToProduct(productDTO);
-        productsRepository.save(product);
     }
 
-    private Product convertToProduct(ProductDTO productDTO) {
-        ModelMapper modelMapper = new ModelMapper();
-        Product product = modelMapper.map(productDTO, Product.class);
+    private Product convertToProduct(ProductDTO productDTO) throws Exception {
+        Product product = new Product();
+        try {
+            ModelMapper modelMapper = new ModelMapper();
+            product = modelMapper.map(productDTO, Product.class);
 
-        List<ProductSize> sizes = getProductSizes(productDTO);
-        product.setSizes(sizes);
+            List<ProductSize> sizes = getProductSizes(productDTO);
+            product.setSizes(sizes);
 
-        List<PriceState> priceHistoryList = getPriceHistory(productDTO);
-        product.setPriceHistory(priceHistoryList);
+            List<PriceState> priceHistoryList = getPriceHistory(productDTO);
+            product.setPriceHistory(priceHistoryList);
+        } catch (Exception e) {
+            throw new Exception();
+        }
 
         return product;
     }
 
-    private List<PriceState> getPriceHistory(ProductDTO productDTO) {
+    private List<PriceState> getPriceHistory(ProductDTO productDTO) throws Exception {
         List<PriceStateDTO> priceHistoryList = productDTO.getPriceHistory();
         List<PriceState> resultList = new ArrayList<>();
-        for (PriceStateDTO priceStateDTO : priceHistoryList) {
-            PriceState priceState = new PriceState();
-            priceState.setTime(priceStateDTO.getTime());
-            priceState.setPrice(priceStateDTO.getCurrency().getPrice());
-            resultList.add(priceState);
+        try {
+            for (PriceStateDTO priceStateDTO : priceHistoryList) {
+                PriceState priceState = new PriceState();
+                priceState.setTime(priceStateDTO.getTime());
+                priceState.setPrice(priceStateDTO.getCurrency().getPrice());
+                resultList.add(priceState);
+            }
+            if (!productDTO.getSizes().isEmpty()) {
+                PriceState currentPriceState = getCurrentPriceState(productDTO);
+                resultList.add(currentPriceState);
+            }
+        } catch (Exception e) {
+            throw new Exception();
         }
-        PriceState currentPriceState = getCurrentPriceState(productDTO);
-        resultList.add(currentPriceState);
 
         return resultList;
     }
 
-    private PriceState getCurrentPriceState(ProductDTO productDTO) {
+    private PriceState getCurrentPriceState(ProductDTO productDTO) throws Exception {
         PriceState currentPriceState = new PriceState();
-        int sizesLength = productDTO.getSizes().size();
-        long currentTimeSeconds = (System.currentTimeMillis() / 100000) * 100;
-        currentPriceState.setTime(String.valueOf(currentTimeSeconds));
-        currentPriceState.setPrice(productDTO.getSizes().get(sizesLength - 1).getPrice().getProduct());
+        try {
+            int sizesLength = productDTO.getSizes().size();
+            long currentTimeSeconds = (System.currentTimeMillis() / 100000) * 100;
+            currentPriceState.setTime(String.valueOf(currentTimeSeconds));
+            currentPriceState.setPrice(productDTO.getSizes().get(sizesLength - 1).getPrice().getProduct());
+        } catch (Exception e) {
+            throw new Exception();
+        }
 
         return currentPriceState;
     }
 
-    private List<ProductSize> getProductSizes(ProductDTO productDTO) {
+    private List<ProductSize> getProductSizes(ProductDTO productDTO) throws Exception {
         List<ProductSize> sizes = new ArrayList<>();
-        for (ProductSizeDTO productSizeDTO : productDTO.getSizes()) {
-            ProductSize productSize = convertToProductSize(productSizeDTO);
-            productSize.setBasicPrice(productSizeDTO.getPrice().getBasic());
-            productSize.setDiscountPrice(productSizeDTO.getPrice().getProduct());
-            sizes.add(productSize);
+        try {
+            for (ProductSizeDTO productSizeDTO : productDTO.getSizes()) {
+                ProductSize productSize = convertToProductSize(productSizeDTO);
+                productSize.setBasicPrice(productSizeDTO.getPrice().getBasic());
+                productSize.setDiscountPrice(productSizeDTO.getPrice().getProduct());
+                sizes.add(productSize);
+            }
+        } catch (Exception e) {
+            throw new Exception();
         }
+
         return sizes;
     }
 

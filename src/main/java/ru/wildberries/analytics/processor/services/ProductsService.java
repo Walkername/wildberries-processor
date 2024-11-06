@@ -36,12 +36,13 @@ public class ProductsService {
             productDTO = mapper.readValue(productJson, ProductDTO.class);
             Product product = convertToProduct(productDTO);
             productsRepository.save(product);
-        } catch (Exception ignored) {
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
     private Product convertToProduct(ProductDTO productDTO) throws Exception {
-        Product product = new Product();
+        Product product;
         try {
             ModelMapper modelMapper = new ModelMapper();
             product = modelMapper.map(productDTO, Product.class);
